@@ -4,6 +4,8 @@
   "description": "A geocoding mapp application using the MEVN stack",
   "main": "index.js",
   "scripts": {
+    "start": "node index.js",
+    "dev": "nodemon index.js",
     "test": "test:unit"
   },
   "keywords": [
@@ -12,5 +14,15 @@
     "location"
   ],
   "author": "Sammy T",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "axios": "^0.27.2",
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.1",
+    "express": "^4.18.1"
+  },
+  "devDependencies": {
+    "@vue/test-utils": "^2.0.2",
+    "jest": "^28.1.3"
+  }
 }
