@@ -7,7 +7,7 @@
 <script>
 // @ is an alias to /src
 import leaflet from 'leaflet';
-import { onMounted } from 'vue';
+import { onMounted, ref } from 'vue';
 
 const token = process.env.VUE_APP_API_KEY;
 export default {
@@ -33,9 +33,71 @@ export default {
           }
         )
         .addTo(map);
+
+      getGeoLocation();
     });
 
-    return map;
+    const coords = ref(null);
+    const fetchCoords = ref(null);
+    const mapMarker = ref(null);
+
+    // Map coords functions
+    const getGeoLocation = () => {
+      // For loading
+      fetchCoords.value = true;
+
+      // Api call to get coords IF not in session
+      if (sessionStorage.getItem('coords')) {
+        coords.value = JSON.parse(sessionStorage.getItem('coords'));
+
+        plotGeolocation(coords.value);
+
+        return;
+      }
+
+      navigator.geolocation.getCurrentPosition(setCoords, getLocationError);
+    };
+
+    const setCoords = (pos) => {
+      fetchCoords.value = false;
+
+      // Store coords in session storage
+      const setSessionCoords = {
+        lat: pos.coords.latitude,
+        long: pos.coords.longitude,
+      };
+
+      sessionStorage.setItem('coords', JSON.stringify(setSessionCoords));
+
+      // Set ref coords value
+      coords.value = setSessionCoords;
+
+      plotGeolocation(coords.value);
+    };
+
+    const plotGeolocation = (coords) => {
+      // Custom marker
+      const customMarker = leaflet.icon({
+        iconUrl: require('@/assets/map-marker-red.svg'),
+        iconSize: [32, 32],
+      });
+
+      // New marker with coords and icon for plotting
+      mapMarker.value = leaflet
+        .marker([coords.lat, coords.long], { icon: customMarker })
+        .addTo(map);
+
+      //Set map view to current coords
+      map.setView([coords.lat, coords.long], 12);
+    };
+
+    const getLocationError = (error) => {
+      console.log(error);
+    };
+
+    // End map coords related functions
+
+    return { coords, mapMarker };
   },
 };
 </script>
