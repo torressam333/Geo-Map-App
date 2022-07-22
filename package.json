@@ -1,0 +1,16 @@
+{
+  "name": "geo_map_app",
+  "version": "0.0.1",
+  "description": "A geocoding mapp application using the MEVN stack",
+  "main": "index.js",
+  "scripts": {
+    "test": "test:unit"
+  },
+  "keywords": [
+    "Geocode",
+    "mapping",
+    "location"
+  ],
+  "author": "Sammy T",
+  "license": "MIT"
+}
