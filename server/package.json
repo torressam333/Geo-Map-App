@@ -1,7 +1,7 @@
 {
   "name": "geo_map_app",
   "version": "0.0.1",
-  "description": "A geocoding mapp application using the MEVN stack",
+  "description": "A geocoding map application built with node and express",
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
