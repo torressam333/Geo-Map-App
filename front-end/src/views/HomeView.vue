@@ -1,5 +1,7 @@
 <template>
-  <div class="home"></div>
+  <div class="h-screen relative">
+    <div id="map" class="h-full z-[1]"></div>
+  </div>
 </template>
 
 <script>
