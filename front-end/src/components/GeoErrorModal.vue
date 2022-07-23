@@ -1,0 +1,33 @@
+<template>
+  <div
+    class="h-screen absolute w-full z-10 flex justify-center items-start pt-[150px] bg-black/50"
+  >
+    <div
+      class="flex flex-col bg-white w-[80%] sm:w-[500px] px-6 py-8 rounded-md"
+    >
+      <h1 class="text-xl mb-3">Error: {{ errorMessage }}</h1>
+      <p class="text-sm mb-6">
+        This error may be caused because your location services may be disabled.
+        Please enable locaiton services to make the maps work properly.
+      </p>
+      <button
+        @click="$emit('closeGeoError')"
+        class="self-end py-2 px-4 bg-red-600 text-white rounded-md text-sm"
+      >
+        Close Modal
+      </button>
+    </div>
+  </div>
+</template>
+
+<script>
+export default {
+  name: 'GeoErrorModal',
+  props: {
+    errorMessage: {
+      type: String,
+      required: false,
+    },
+  },
+};
+</script>
