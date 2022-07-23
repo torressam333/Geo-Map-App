@@ -1,5 +1,6 @@
 <template>
   <div class="h-screen relative">
+    <MapFeatures />
     <GeoErrorModal
       @closeGeoError="closeGeoError"
       v-if="geoError"
@@ -13,12 +14,13 @@
 // @ is an alias to /src
 import leaflet from 'leaflet';
 import { onMounted, ref } from 'vue';
-import GeoErrorModal from '@/components/GeoErrorModal.vue';
+import GeoErrorModal from '@/components/GeoErrorModal';
+import MapFeatures from '@/components/MapFeatures';
 
 const token = process.env.VUE_APP_API_KEY;
 export default {
   name: 'HomeView',
-  components: { GeoErrorModal },
+  components: { GeoErrorModal, MapFeatures },
   setup() {
     let map;
     onMounted(() => {
@@ -44,7 +46,7 @@ export default {
     const coords = ref(null);
     const fetchCoords = ref(null);
     const mapMarker = ref(null);
-    const geoError = ref(true);
+    const geoError = ref(null);
     const geoErrorMessage = ref(null);
     // Map coords functions
     const getGeoLocation = () => {
