@@ -24,4 +24,15 @@ describe('GeoErrorModal', () => {
   it('renders the modal markup correctly', () => {
     expect(wrapper.element).toMatchSnapshot();
   });
+
+  it('outputs a custom error message when received as props', async () => {
+    await wrapper.setProps({
+      errorMessage: 'Oops your location cannot be found',
+    });
+
+    expect(wrapper.vm.errorMessage).toBe('Oops your location cannot be found');
+    expect(wrapper.html()).toContain(
+      '<h1 class="text-xl mb-3">Error: Oops your location cannot be found</h1>'
+    );
+  });
 });
