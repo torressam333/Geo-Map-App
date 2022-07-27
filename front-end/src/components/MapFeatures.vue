@@ -19,13 +19,20 @@
       </div>
       <!-- Search Results -->
       <div class="absolute mt-2 w-full">
-        <div class="h-[200px] overflow-sroll bg-white rounded-md">
+        <div
+          v-if="searchQuery"
+          class="h-[400px] overflow-scroll bg-white rounded-md"
+        >
           <!-- Results API output -->
           <div
-            class="px-4 py-2 flex gap-x-2 cursor-pointer hover:bg-slate-600 hover:text-white"
+            class="px-4 py-2 flex gap-x-2 cursor-pointer hover:bg-slate-600 hover:text-white h-auto"
+            v-for="result in searchData"
+            :key="result.id"
           >
             <i class="fas fa-map-marker-alt"></i>
-            <p class="text-xs">Testing api results from backend</p>
+            <p class="text-xs">
+              {{ result.place_name }}
+            </p>
           </div>
         </div>
       </div>
