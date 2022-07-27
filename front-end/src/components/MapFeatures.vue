@@ -36,8 +36,8 @@
 
 <script>
 import { ref } from 'vue';
-import axios from 'axios';
-import SearchResults from './SearchResults.vue';
+import SearchResults from '@/components/SearchResults.vue';
+import getSearchResults from '@/api/getSearchResults';
 
 export default {
   name: 'MapFeatures',
@@ -59,29 +59,17 @@ export default {
     const queryTimeout = ref(null);
 
     // Clear previous timeout
-    //clearTimeout(queryTimeout.value);
+    clearTimeout(queryTimeout.value);
 
     const search = () => {
       // Debounce
       queryTimeout.value = setTimeout(async () => {
-        if (searchQuery.value !== '') {
-          const params = new URLSearchParams({
-            fuzzyMatch: true,
-            language: 'en',
-            limit: 10,
-            proximity: props.coords
-              ? `${props.coords.long},${props.coords.lat}`
-              : '0,0',
-          });
-
-          const getData = await axios.get(
-            `http://localhost:3000/api/search/${searchQuery.value}?${params}`
-          );
-
-          searchData.value = getData.data.features;
-
-          console.log(searchData.value);
-        }
+        searchData.value = await getSearchResults(
+          searchQuery.value,
+          props.coords,
+          props.coords.long,
+          props.coords.lat
+        );
       }, 1500);
     };
 
