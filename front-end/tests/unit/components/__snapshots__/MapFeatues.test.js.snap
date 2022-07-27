@@ -2,8 +2,30 @@
 
 exports[`MapFeatures renders the modal markup correctly 1`] = `
 <section
-  class="w-full md:w-auto absolute md:top-[40px] md:left-[60px] z-[2] flex gap-4 px-6 py-8 md:px-0 md:py-0 bg-transparent"
+  class="w-full md:w-auto absolute md:top-[40px] md:left-[60px] z-[2] flex gap-2 px-6 py-8 md:px-0 md:py-0 bg-transparent"
 >
+  <!-- Location Searching -->
+  <div
+    class="relative flex-1 md:min-w-[350px]"
+  >
+    <!-- search input -->
+    <input
+      aria-label="Search for location"
+      class="pl-9 pr-4 py-3 text-sm focus:outline-none shadow-md rounded-md w-full"
+      placeholder="Search for location"
+      type="text"
+    />
+    <!-- Search icon -->
+    <div
+      class="absolute top-0 left-[8px] h-full flex items-center"
+    >
+      <i
+        class="fas fa-search"
+      />
+    </div>
+    <search-results-stub />
+  </div>
+  <!-- Geolocation -->
   <div
     class="px-4 bg-white flex items-center shadow-md rounded-md min-h-[50px] bg-slate-600"
   >

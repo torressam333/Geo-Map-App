@@ -1,0 +1,9 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`SearchResults has matching html output 1`] = `
+<section
+  class="absolute mt-2 w-full"
+>
+  <!--v-if-->
+</section>
+`;
