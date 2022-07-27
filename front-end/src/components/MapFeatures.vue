@@ -4,8 +4,13 @@
   >
     <div
       class="px-4 bg-white flex items-center shadow-md rounded-md min-h-[50px]"
+      :class="{ 'bg-slate-600': coords }"
     >
-      <i class="fas fa-location-arrow text-slate-700 text-[1.5rem]"></i>
+      <i
+        class="fas fa-location-arrow text-[1.5rem] cursor-pointer"
+        :class="{ 'text-white': coords, 'animate-pulse': fetchCoords }"
+        @click="$emit('getGeoLocation')"
+      ></i>
     </div>
   </section>
 </template>
@@ -13,5 +18,15 @@
 <script>
 export default {
   name: 'MapFeatures',
+  props: {
+    coords: {
+      type: Object,
+      required: false,
+    },
+    fetchCoords: {
+      type: Boolean,
+      required: false,
+    },
+  },
 };
 </script>

@@ -1,6 +1,10 @@
 <template>
   <div class="h-screen relative">
-    <MapFeatures />
+    <MapFeatures
+      :coords="coords"
+      :fetchCoords="fetchCoords"
+      @getGeoLocation="getGeoLocation"
+    />
     <GeoErrorModal
       @closeGeoError="closeGeoError"
       v-if="geoError"
@@ -43,24 +47,40 @@ export default {
         .addTo(map);
       getGeoLocation();
     });
+
     const coords = ref(null);
     const fetchCoords = ref(null);
     const mapMarker = ref(null);
     const geoError = ref(null);
     const geoErrorMessage = ref(null);
+
     // Map coords functions
     const getGeoLocation = () => {
+      // When user disables location services
+      if (coords.value) {
+        coords.value = null;
+        sessionStorage.removeItem('coords');
+        map.removeLayer(mapMarker.value);
+
+        return;
+      }
+
       // For loading
-      fetchCoords.value = true;
-      // Api call to get coords IF not in session
+      fetchCoords.value = false;
+
+      // Pull coords from session if they exist
       if (sessionStorage.getItem('coords')) {
         coords.value = JSON.parse(sessionStorage.getItem('coords'));
         // Place icon on map
         plotGeolocation(coords.value);
+
         return;
       }
+
+      // Api call to get coords IF not in session
       navigator.geolocation.getCurrentPosition(setCoords, getLocationError);
     };
+
     const setCoords = (pos) => {
       fetchCoords.value = false;
       // Store coords in session storage
@@ -73,6 +93,7 @@ export default {
       coords.value = setSessionCoords;
       plotGeolocation(coords.value);
     };
+
     const plotGeolocation = (coords) => {
       // Custom marker
       const customMarker = leaflet.icon({
@@ -86,18 +107,28 @@ export default {
       //Set map view to current coords
       map.setView([coords.lat, coords.long], 12);
     };
+
     const getLocationError = (error) => {
       fetchCoords.value = null;
       // Will be displayed in model
       geoError.value = true;
       geoErrorMessage.value = error.message;
     };
+
     const closeGeoError = () => {
       geoError.value = null;
       geoErrorMessage.value = null;
     };
     // To be used in template
-    return { coords, mapMarker, closeGeoError, geoError, geoErrorMessage };
+    return {
+      coords,
+      fetchCoords,
+      mapMarker,
+      closeGeoError,
+      geoError,
+      geoErrorMessage,
+      getGeoLocation,
+    };
   },
 };
 </script>
