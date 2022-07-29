@@ -10,11 +10,11 @@
         v-model="searchQuery"
         aria-label="Search for location"
         type="text"
-        class="pl-9 pr-4 py-3 text-sm focus:outline-none shadow-md rounded-md w-full"
+        class="pl-8 pr-4 py-3 text-sm focus:outline-none shadow-md rounded-md w-full"
         placeholder="Search for location"
       />
       <!-- Search icon -->
-      <div class="absolute top-0 left-[8px] h-full flex items-center">
+      <div class="absolute top-0 left-[10px] h-full flex items-center">
         <i class="fas fa-search"></i>
       </div>
       <SearchResults :search-query="searchQuery" :search-data="searchData" />

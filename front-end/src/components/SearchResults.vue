@@ -4,22 +4,28 @@
       v-if="searchQuery"
       class="h-[400px] overflow-scroll bg-white rounded-md"
     >
+      <!-- Show spinner when results are loading -->
+      <LoadingSpinner v-if="!searchData" />
       <!-- Results API output -->
-      <div
-        class="px-4 py-2 flex gap-x-2 cursor-pointer hover:bg-slate-600 hover:text-white h-auto"
-        v-for="result in searchData"
-        :key="result.id"
-      >
-        <i class="fas fa-map-marker-alt"></i>
-        <p class="text-xs" data-test="search-result">
-          {{ result.place_name }}
-        </p>
-      </div>
+      <span v-else>
+        <div
+          class="px-4 py-2 flex gap-x-2 cursor-pointer hover:bg-slate-600 hover:text-white h-auto"
+          v-for="result in searchData"
+          :key="result.id"
+        >
+          <i class="fas fa-map-marker-alt"></i>
+          <p class="text-xs" data-test="search-result">
+            {{ result.place_name }}
+          </p>
+        </div>
+      </span>
     </div>
   </section>
 </template>
 
 <script>
+import LoadingSpinner from './LoadingSpinner.vue';
+
 export default {
   name: 'SearchResults',
   props: {
@@ -32,5 +38,6 @@ export default {
       required: false,
     },
   },
+  components: { LoadingSpinner },
 };
 </script>
