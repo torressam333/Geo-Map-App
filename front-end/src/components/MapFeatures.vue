@@ -58,10 +58,13 @@ export default {
     const searchData = ref(null);
     const queryTimeout = ref(null);
 
-    // Clear previous timeout
-    clearTimeout(queryTimeout.value);
-
     const search = () => {
+      // Clear previous timeout
+      clearTimeout(queryTimeout.value);
+
+      // Clear search each time
+      searchData.value = null;
+
       // Debounce
       queryTimeout.value = setTimeout(async () => {
         searchData.value = await getSearchResults(
