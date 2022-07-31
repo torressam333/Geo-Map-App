@@ -73,7 +73,7 @@ export default {
           props.coords.long,
           props.coords.lat
         );
-      }, 1500);
+      }, 1200);
     };
 
     return { searchQuery, searchData, queryTimeout, search };
