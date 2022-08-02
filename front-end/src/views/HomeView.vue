@@ -117,8 +117,8 @@ export default {
         .marker([lat, long], { icon: customMarker })
         .addTo(map);
 
-      //Set map view to current coords
-      map.setView([lat, long], 11);
+      //Set map view to current coords w higher zoom
+      map.setView([lat, long], 15);
     };
 
     const getLocationError = (error) => {

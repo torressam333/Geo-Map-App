@@ -46,6 +46,15 @@ describe('MapFeatures', () => {
     expect(wrapper.emitted().getGeoLocation).toBeTruthy();
   });
 
+  it('emits a method to pass location plot points to parent', async () => {
+    wrapper.vm.$emit('plotResult');
+
+    // Wait until $emits have been handled
+    await wrapper.vm.$nextTick();
+
+    expect(wrapper.emitted().plotResult).toBeTruthy();
+  });
+
   it('renders the modal markup correctly', () => {
     expect(wrapper.element).toMatchSnapshot();
   });

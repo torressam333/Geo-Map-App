@@ -11,13 +11,13 @@ exports[`MapFeatures renders the modal markup correctly 1`] = `
     <!-- search input -->
     <input
       aria-label="Search for location"
-      class="pl-9 pr-4 py-3 text-sm focus:outline-none shadow-md rounded-md w-full"
+      class="pl-8 pr-4 py-3 text-sm focus:outline-none shadow-md rounded-md w-full"
       placeholder="Search for location"
       type="text"
     />
     <!-- Search icon -->
     <div
-      class="absolute top-0 left-[8px] h-full flex items-center"
+      class="absolute top-0 left-[10px] h-full flex items-center"
     >
       <i
         class="fas fa-search"

@@ -18,7 +18,7 @@ describe('SearchResults', () => {
   });
 
   it('has matching html output', () => {
-    let wrapper = shallowMount(SearchResults);
+    const wrapper = shallowMount(SearchResults);
     expect(wrapper.element).toMatchSnapshot();
   });
 
@@ -43,5 +43,16 @@ describe('SearchResults', () => {
   it('does not render results without a searchQuery', () => {
     const wrapper = shallowMount(SearchResults, createConfig());
     expect(wrapper.text()).toMatch('');
+  });
+
+  it('emits a method to pass selected location to parent', async () => {
+    const wrapper = shallowMount(SearchResults);
+
+    wrapper.vm.$emit('setResult');
+
+    // Wait until $emits have been handled
+    await wrapper.vm.$nextTick();
+
+    expect(wrapper.emitted().setResult).toBeTruthy();
   });
 });
