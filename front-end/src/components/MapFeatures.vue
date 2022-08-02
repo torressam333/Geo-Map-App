@@ -17,7 +17,11 @@
       <div class="absolute top-0 left-[10px] h-full flex items-center">
         <i class="fas fa-search"></i>
       </div>
-      <SearchResults :search-query="searchQuery" :search-data="searchData" />
+      <SearchResults
+        :search-query="searchQuery"
+        :search-data="searchData"
+        @setResult="selectLocationResult"
+      />
     </div>
 
     <!-- Geolocation -->
@@ -53,7 +57,7 @@ export default {
   },
   components: { SearchResults },
 
-  setup(props) {
+  setup(props, { emit }) {
     const searchQuery = ref(null);
     const searchData = ref(null);
     const queryTimeout = ref(null);
@@ -76,7 +80,18 @@ export default {
       }, 1200);
     };
 
-    return { searchQuery, searchData, queryTimeout, search };
+    const selectLocationResult = (result) => {
+      // Pass this up to HomeView.vue to plot these points on the map
+      emit('plotResult', result.geometry);
+    };
+
+    return {
+      searchQuery,
+      searchData,
+      queryTimeout,
+      search,
+      selectLocationResult,
+    };
   },
 };
 </script>

@@ -12,6 +12,7 @@
           class="px-4 py-2 flex gap-x-2 cursor-pointer hover:bg-slate-600 hover:text-white h-auto"
           v-for="result in searchData"
           :key="result.id"
+          @click="setResultEvent(result)"
         >
           <i class="fas fa-map-marker-alt"></i>
           <p class="text-xs" data-test="search-result">
@@ -39,5 +40,14 @@ export default {
     },
   },
   components: { LoadingSpinner },
+  setup(props, { emit }) {
+    const setResultEvent = (result) => {
+      emit('setResult', result);
+    };
+
+    return {
+      setResultEvent,
+    };
+  },
 };
 </script>

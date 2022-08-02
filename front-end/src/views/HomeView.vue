@@ -4,6 +4,7 @@
       :coords="coords"
       :fetchCoords="fetchCoords"
       @getGeoLocation="getGeoLocation"
+      @plotResult="plotResult"
     />
     <GeoErrorModal
       @closeGeoError="closeGeoError"
@@ -72,7 +73,12 @@ export default {
       if (sessionStorage.getItem('coords')) {
         coords.value = JSON.parse(sessionStorage.getItem('coords'));
         // Place icon on map
-        plotGeolocation(coords.value);
+        plotLocationOnMap(
+          coords.value.lat,
+          coords.value.long,
+          'map-marker-red.svg',
+          mapMarker
+        );
 
         return;
       }
@@ -91,21 +97,28 @@ export default {
       sessionStorage.setItem('coords', JSON.stringify(setSessionCoords));
       // Set ref coords value
       coords.value = setSessionCoords;
-      plotGeolocation(coords.value);
+      plotLocationOnMap(
+        coords.value.lat,
+        coords.value.long,
+        'map-marker-red.svg',
+        mapMarker
+      );
     };
 
-    const plotGeolocation = (coords) => {
+    const plotLocationOnMap = (lat, long, mapMarkerSvg, mapMarkerArg) => {
       // Custom marker
       const customMarker = leaflet.icon({
-        iconUrl: require('@/assets/map-marker-red.svg'),
-        iconSize: [32, 32],
+        iconUrl: require(`@/assets/${mapMarkerSvg}`),
+        iconSize: [35, 35],
       });
+
       // New marker with coords and icon for plotting
-      mapMarker.value = leaflet
-        .marker([coords.lat, coords.long], { icon: customMarker })
+      mapMarkerArg.value = leaflet
+        .marker([lat, long], { icon: customMarker })
         .addTo(map);
+
       //Set map view to current coords
-      map.setView([coords.lat, coords.long], 12);
+      map.setView([lat, long], 11);
     };
 
     const getLocationError = (error) => {
@@ -119,6 +132,22 @@ export default {
       geoError.value = null;
       geoErrorMessage.value = null;
     };
+
+    const resultsMarker = ref(null);
+    const plotResult = (coords) => {
+      // Check if result marker has value
+      if (resultsMarker.value) {
+        map.removeLayer(resultsMarker.value);
+      }
+
+      plotLocationOnMap(
+        coords.coordinates[1],
+        coords.coordinates[0],
+        'map-marker-blue.svg',
+        resultsMarker
+      );
+    };
+
     // To be used in template
     return {
       coords,
@@ -128,6 +157,7 @@ export default {
       geoError,
       geoErrorMessage,
       getGeoLocation,
+      plotResult,
     };
   },
 };
