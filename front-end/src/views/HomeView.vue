@@ -6,6 +6,7 @@
       @getGeoLocation="getGeoLocation"
       @plotResult="plotResult"
       @toggleSearchResults="toggleSearchResults"
+      @removeResult="removeResult"
     />
     <GeoErrorModal
       @closeGeoError="closeGeoError"
@@ -167,6 +168,8 @@ export default {
     // Prevent prop drilling
     provide('searchResults', searchResults);
 
+    const removeResult = () => map.removeLayer(resultsMarker.value);
+
     // To be used in template
     return {
       coords,
@@ -180,6 +183,7 @@ export default {
       searchResults,
       toggleSearchResults,
       closeSearchResults,
+      removeResult,
     };
   },
 };

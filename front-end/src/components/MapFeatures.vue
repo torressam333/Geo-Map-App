@@ -22,6 +22,8 @@
         :search-query="searchQuery"
         :search-data="searchData"
         @setResult="selectLocationResult"
+        :selectedResult="selectedResult"
+        @removeResult="removeResult"
       />
     </div>
 
@@ -62,6 +64,7 @@ export default {
     const searchQuery = ref(null);
     const searchData = ref(null);
     const queryTimeout = ref(null);
+    const selectedResult = ref(null);
 
     const search = () => {
       // Clear previous timeout
@@ -82,8 +85,15 @@ export default {
     };
 
     const selectLocationResult = (result) => {
+      selectedResult.value = result;
       // Pass this up to HomeView.vue to plot these points on the map
       emit('plotResult', result.geometry);
+    };
+
+    const removeResult = () => {
+      selectedResult.value = null;
+
+      emit('removeResult');
     };
 
     return {
@@ -92,6 +102,8 @@ export default {
       queryTimeout,
       search,
       selectLocationResult,
+      selectedResult,
+      removeResult,
     };
   },
 };

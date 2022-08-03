@@ -21,6 +21,19 @@
         </div>
       </span>
     </div>
+    <!-- Selected Search Result -->
+    <div v-if="selectedResult" class="mt-2 px-4 pt-2 pb-5 bg-white rounded-md">
+      <i
+        @click="removeResult"
+        class="far fa-times-circle flex justify-end cursor-pointer hover:text-red-500"
+      ></i>
+      <h1 class="text-lg">{{ selectedResult.text }}</h1>
+      <p class="text-xs mb-1">
+        {{ selectedResult.properties.address }}, {{ selectedResult.city }}
+        {{ selectedResult.state }}
+      </p>
+      <p class="text-xs">{{ selectedResult.properties.category }}</p>
+    </div>
   </section>
 </template>
 
@@ -31,6 +44,10 @@ import { inject } from 'vue';
 export default {
   name: 'SearchResults',
   props: {
+    selectedResult: {
+      type: Object,
+      required: false,
+    },
     searchData: {
       type: Object,
       required: false,
@@ -48,9 +65,12 @@ export default {
 
     const searchResults = inject('searchResults');
 
+    const removeResult = () => emit('removeResult');
+
     return {
       setResultEvent,
       searchResults,
+      removeResult,
     };
   },
 };
