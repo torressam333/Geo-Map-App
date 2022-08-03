@@ -47,6 +47,13 @@ export default {
           }
         )
         .addTo(map);
+
+      // Add listener to map to close results when interacting with map
+
+      map.on('moveend', () => {
+        closeSearchResults();
+      });
+
       getGeoLocation();
     });
 
