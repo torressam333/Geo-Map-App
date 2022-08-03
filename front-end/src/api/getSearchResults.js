@@ -16,11 +16,7 @@ const getSearchResults = async (
         proximity: coords ? `${long},${lat}` : '0,0',
       });
 
-      const response = await axios.get(
-        `http://localhost:3000/api/search/${searchQuery}?${params}`
-      );
-
-      console.log(response.data.features);
+      const response = await axios.get(`api/search/${searchQuery}?${params}`);
 
       return response?.data?.features;
     }
