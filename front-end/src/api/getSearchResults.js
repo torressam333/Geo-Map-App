@@ -20,6 +20,8 @@ const getSearchResults = async (
         `http://localhost:3000/api/search/${searchQuery}?${params}`
       );
 
+      console.log(response.data.features);
+
       return response?.data?.features;
     }
   } catch (err) {

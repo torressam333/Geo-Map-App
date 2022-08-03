@@ -55,10 +55,6 @@ export default {
       type: Boolean,
       required: false,
     },
-    searchResults: {
-      type: Object,
-      required: true,
-    },
   },
   components: { SearchResults },
 
