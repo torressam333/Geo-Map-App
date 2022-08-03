@@ -5,6 +5,7 @@
       :fetchCoords="fetchCoords"
       @getGeoLocation="getGeoLocation"
       @plotResult="plotResult"
+      @toggleSearchResults="toggleSearchResults"
     />
     <GeoErrorModal
       @closeGeoError="closeGeoError"
@@ -18,7 +19,7 @@
 <script>
 // @ is an alias to /src
 import leaflet from 'leaflet';
-import { onMounted, ref } from 'vue';
+import { onMounted, ref, provide } from 'vue';
 import GeoErrorModal from '@/components/GeoErrorModal';
 import MapFeatures from '@/components/MapFeatures';
 
@@ -146,7 +147,18 @@ export default {
         'map-marker-blue.svg',
         resultsMarker
       );
+
+      closeSearchResults();
     };
+
+    // Closing the search results
+    const searchResults = ref(null);
+    const toggleSearchResults = () =>
+      (searchResults.value = !searchResults.value);
+    const closeSearchResults = () => (searchResults.value = null);
+
+    // Prevent prop drilling
+    provide('searchResults', searchResults);
 
     // To be used in template
     return {
@@ -158,6 +170,9 @@ export default {
       geoErrorMessage,
       getGeoLocation,
       plotResult,
+      searchResults,
+      toggleSearchResults,
+      closeSearchResults,
     };
   },
 };

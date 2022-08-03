@@ -1,7 +1,7 @@
 <template>
   <section class="absolute mt-2 w-full">
     <div
-      v-if="searchQuery"
+      v-if="searchQuery && searchResults"
       class="h-[400px] overflow-scroll bg-white rounded-md"
     >
       <!-- Show spinner when results are loading -->
@@ -26,6 +26,7 @@
 
 <script>
 import LoadingSpinner from './LoadingSpinner.vue';
+import { inject } from 'vue';
 
 export default {
   name: 'SearchResults',
@@ -45,8 +46,11 @@ export default {
       emit('setResult', result);
     };
 
+    const searchResults = inject('searchResults');
+
     return {
       setResultEvent,
+      searchResults,
     };
   },
 };

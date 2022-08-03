@@ -12,6 +12,7 @@
         type="text"
         class="pl-8 pr-4 py-3 text-sm focus:outline-none shadow-md rounded-md w-full"
         placeholder="Search for location"
+        @focus="$emit('toggleSearchResults')"
       />
       <!-- Search icon -->
       <div class="absolute top-0 left-[10px] h-full flex items-center">
@@ -53,6 +54,10 @@ export default {
     fetchCoords: {
       type: Boolean,
       required: false,
+    },
+    searchResults: {
+      type: Object,
+      required: true,
     },
   },
   components: { SearchResults },
